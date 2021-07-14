@@ -2,6 +2,9 @@ CREATE DATABASE eCommerce;
 
 
 
+-- table for listing of products
+--    with id, name, unit-id and price
+
 CREATE TABLE products(
 	product_id INT NOT NULL IDENTITY(1,1),
 	name VARCHAR(100) NOT NULL,
@@ -12,6 +15,9 @@ CREATE TABLE products(
 
 
 
+-- table for unit-type ( kg, l, etc)
+--    with id, name
+
 CREATE TABLE unit_type(
 	unit_type_id INT NOT NULL IDENTITY (200,1),
 	unit_name VARCHAR(100) NOT NULL,
@@ -19,6 +25,9 @@ CREATE TABLE unit_type(
 );
 
 
+
+-- Foriegn Key for products table 
+--    on unit-id 
 
 ALTER TABLE products
 	ADD CONSTRAINT FK_unit_type_id 
@@ -34,12 +43,13 @@ INSERT INTO
 	VALUES ( 'each' ),( 'KG' ),( 'L' ),( 'pair' );
 
 
-
 INSERT INTO
 	products ( name, unit_type_id, price_per_unit )
 	VALUES ( 'Pen', 200, 5 ), ( 'Oil', 202, 90), ( 'Tomato', 201, 18);
 
 
+
+-- table for Registering Customers
 
 CREATE TABLE customers(
 	customer_id INT NOT NULL IDENTITY(100,1),
@@ -49,6 +59,9 @@ CREATE TABLE customers(
 );
 
 
+
+-- Sellers profile's data
+--    id, product-id
 
 CREATE TABLE sellers(
 	seller_id INT NOT NULL IDENTITY(1010,1),
@@ -70,6 +83,9 @@ INSERT INTO
 
 
 
+-- adding fields to sellers
+--    name, address, contact
+
 ALTER TABLE sellers
 	ADD	seller_name VARCHAR(100) NOT NULL;
 ALTER TABLE sellers
@@ -87,6 +103,9 @@ INSERT INTO
 
 
 
+-- orders table for orders
+--    with order-id, customer-id, total-amount
+
 CREATE TABLE orders(
 	order_id INT NOT NULL IDENTITY(10,1),
 	customer_id INT NOT NULL,
@@ -100,6 +119,9 @@ CREATE TABLE orders(
 );
 
 
+
+-- table for bill
+--    order-id, product-id, seller-id, quantity, total-amount
 
 CREATE TABLE ordered_items(
 	order_id INT NOT NULL, 
@@ -119,6 +141,8 @@ CREATE TABLE ordered_items(
 );
 
 
+
+-- table for managing payments
 
 CREATE TABLE payments(
 	order_id INT NOT NULL,
