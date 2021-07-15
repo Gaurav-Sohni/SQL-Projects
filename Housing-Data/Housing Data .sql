@@ -1,9 +1,11 @@
+-- Import Nashville Housing Data dataset
+
 SELECT *
 FROM HousingData..house_data;
 
 
 
--- standardize the Date
+-- Change Date format and store in new column
 
 SELECT SaleDate, CONVERT(date,SaleDate)
 FROM HousingData..house_data;
@@ -19,7 +21,7 @@ FROM HousingData..house_data;
 
 
 
--- populate PropertyAddress data
+-- Populate PropertyAddress data at the Null values based on ParcelID and UniqueID
 
 SELECT *
 FROM HousingData..house_data
@@ -45,7 +47,7 @@ WHERE a.PropertyAddress IS NULL ;
 
 
 
--- breaking PropertyAddress into Individual ( Address, City )
+-- Extract Address, City from PropertyAddress 
 
 SELECT PropertyAddress
 FROM HousingData..house_data ;
@@ -72,7 +74,7 @@ FROM HousingData..house_data;
 
 
 
--- breaking OwnerAddress into Individual ( Address, City, State )
+-- Extract Address, City, State from  OwnerAddress
 
 SELECT OwnerAddress
 FROM HousingData..house_data ;
@@ -102,7 +104,7 @@ FROM HousingData..house_data ;
 
 
 
--- assign Y and N to YES and NO in 'SoldAsVacant' column
+-- Assign Y and N to YES and NO in 'SoldAsVacant' column
 
 SELECT DISTINCT(SoldAsVacant), COUNT(SoldAsVacant)
 FROM HousingData..house_data
@@ -121,7 +123,7 @@ FROM HousingData..house_data ;
 
 
 
--- remove Duplicate Rows
+-- Remove Duplicate Rows by using ROW_NUMBER()
 
 WITH RowNumCTE AS (
 SELECT *,
@@ -143,7 +145,7 @@ FROM HousingData..house_data ;
 
 
 
--- delete Non-Useful column
+-- delete undesired column
 
 ALTER TABLE HousingData..house_data
 DROP COLUMN PropertyAddress, SaleDate, OwnerAddress, TaxDistrict ;
